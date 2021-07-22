@@ -18,10 +18,6 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 	if (tree->left == NULL && tree->right == NULL)
 		return (binary_tree_depth(tree) == binary_tree_size(tree) + 1);
 
-	/*if parent and child are empty*/
-/*	if (tree->left == NULL || tree->right == NULL)
-		return (0);
-*/
 	/*left right subtrees are at the same level*/
 	return (binary_tree_is_perfect(tree->right) &&
 		binary_tree_is_perfect(tree->left));
