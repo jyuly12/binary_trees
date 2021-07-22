@@ -1,6 +1,25 @@
 #include "binary_trees.h"
-#include "10-binary_tree_depth.c"
+#include "9-binary_tree_height.c"
 #include "11-binary_tree_size.c"
+/**
+ * find_tree_size - find the total nodes of the tree
+ * @height: height of the tree.
+ * @base: always 2.
+ *
+ * Return: total nodes of the tree.
+ */
+int find_tree_size(int base, int height)
+{
+	int result = base;
+
+	while (height > 1)
+	{
+		result *= base;
+		height--;
+	}
+
+	return (result - 1);
+}
 
 /**
  * binary_tree_is_perfect - Checks if binary tree has all leaves same level
@@ -11,14 +30,17 @@
 
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
+	int tree_height, tree_size, total_nodes;
+
 	if (!tree)
 		return (0);
 
-	/*same depth all leaves*/
-	if (tree->left == NULL && tree->right == NULL)
-		return (binary_tree_depth(tree) == binary_tree_size(tree) + 1);
+	tree_height = binary_tree_height(tree) + 1;
+	tree_size = binary_tree_size(tree);
 
-	/*left right subtrees are at the same level*/
-	return (binary_tree_is_perfect(tree->right) &&
-		binary_tree_is_perfect(tree->left));
+	total_nodes = find_tree_size(2, tree_height);
+
+	if (tree_size == total_nodes)
+		return (1);
+	return (0);
 }
